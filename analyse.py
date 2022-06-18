@@ -38,7 +38,7 @@ def Processing(files:pd.DataFrame):
     """Processes the data"""
     dfs = []
     for index, file in enumerate(files):
-        if index <= 100: # for testing purposes the amount of files used is limited to 2
+        if index <= 1: # for testing purposes the amount of files used is limited to 2
             print(f"Executing file {file}")
             df = pd.read_csv(file, header=None, names = NAMES, delimiter=r"\s+")
             dfs.append(df)
@@ -49,7 +49,7 @@ def main():
     files = getFiles('data')
     files = preProcessing(files)
     dfs = Processing(files)
-    # plotData(dfs) # turn this on if you want to see the plots generated
+    plotData(dfs) # turn this on if you want to see the plots generated
 
 
 if __name__ == "__main__":
