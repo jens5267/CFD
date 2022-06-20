@@ -9,8 +9,9 @@ import os
 
 # I assumed these were the description for each column, not sure about the rv, so maybe you should change this
 NAMES = ['timestamp', 'experiment', 'perimeter', 'comparison', 'rv']
+RESULTS_FOLDER = "Results"
 
-def createOutputFolder(folderName):
+def createOutputFolder(folderName=RESULTS_FOLDER):
     if not os.path.isdir(folderName):
         os.mkdir(folderName)
 
@@ -20,23 +21,30 @@ def createDataframe(experiment: str):
     df = df[::10] # comment this out to use all data instead of every tenth entry
     return df
 
-def plotExperiment(df, row_selection, s=240, color='none', edgecolors='r'):
+def plotExperiment(df, s=240):
     plt.figure(figsize=(25, 25))
-    # x-value is timestamp, y-value is selected in main. You also could plot all columns at the same figure
-    plt.scatter(df['timestamp'], df[row_selection], s=s, color=color, edgecolors=edgecolors)
+    # x-value is timestamp, for y-values, all columns are plotted at the same figure
+    for row in NAMES[1:]:
+        plt.scatter(df['timestamp'], df[row], s=s, alpha=0.5, label=row)
     # you could also pass the df from createDataframe as it is and reduce the amount of plots here (df = df[::10])
-    # plt.scatter(df['timestamp'], df['comparison'], s=s, color=color, edgecolors=edgecolors)
-    plt.show()
+    plt.legend()
+    return plt
+
+def saveImage(plt, selected_experiment):
+    """Saves the image in the Result folder as experiment name with png extension"""
+    plt.savefig(f'Results/{selected_experiment}.png')
 
 def main():
     rootFolder= 'BubbleData'
     bench_quantities = os.path.join(rootFolder, 'data_bench_quantities')
-    selected_experiment = 'c2g2l3.txt'
+    selected_experiment = 'c2g2l3'
+    path = os.path.join(bench_quantities, selected_experiment+'.txt')
+    df = createDataframe(path)
+    image = plotExperiment(df)
+    saveImage(image, selected_experiment)
 
-    df = createDataframe(os.path.join(bench_quantities, selected_experiment))
-    plotExperiment(df, row_selection='rv')
 
-    print('Thanks for waiting. All results are in the "Results" folder')
+    print(f'Thanks for waiting. All results are in the "{RESULTS_FOLDER}" folder')
 
 if __name__ == "__main__":
     main()
