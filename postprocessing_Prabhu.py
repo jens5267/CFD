@@ -20,6 +20,9 @@ def createDataframe(experiment: str):
     df = df[::10] # comment this out to use all data instead of every tenth entry
     return df
 
+def newFunction():
+    pass 
+
 def plotExperiment(df, row_selection, s=240, color='none', edgecolors='r'):
     plt.figure(figsize=(25, 25))
     # x-value is timestamp, y-value is selected in main. You also could plot all columns at the same figure
