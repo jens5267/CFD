@@ -21,6 +21,7 @@ def createDataframe(experiment: str):
     return df
 
 def newFunction():
+    print("this is working")
     pass 
 
 def plotExperiment(df, row_selection, s=240, color='none', edgecolors='r'):
@@ -40,6 +41,7 @@ def main():
     plotExperiment(df, row_selection='rv')
 
     print('Thanks for waiting. All results are in the "Results" folder')
+    newFunction()
 
 if __name__ == "__main__":
     main()
